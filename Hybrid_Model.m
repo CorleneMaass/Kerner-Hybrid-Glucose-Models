@@ -325,7 +325,10 @@ fprintf('Hybrid BIC = %.3f\n',BIC_hybrid)
 residuals = Gdata - Gfit;
 
 
-[h,p,W] = swtest(residuals)
+[h,p,W] = swtest(residuals);
+fprintf('\nResidual Normality Test\n')
+fprintf('--------------------\n')
+fprintf('Shapiro-Wilk: W = %.4f, p = %.4g\n',W,p)
 
 
 figure

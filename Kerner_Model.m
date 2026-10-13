@@ -158,6 +158,7 @@ initialNorm = norm(objective_function(p0,timeData,Gdata,Idata,Gb,Ib));
 finalNorm = norm(objective_function(p_est,timeData,Gdata,Idata,Gb,Ib));
 
 fprintf('\nResidual Norms\n')
+fprintf('--------------------\n')
 fprintf('Initial residual norm = %.4f\n',initialNorm)
 fprintf('Final residual norm = %.4f\n',finalNorm)
 
@@ -192,6 +193,7 @@ SI = p_est(3)/p_est(2);   % Insulin sensitivity
 SG = p_est(1);            % Glucose effectiveness
 
 fprintf('\nClinical Indices\n')
+fprintf('--------------------\n')
 fprintf('Insulin sensitivity (SI) = %g\n',SI)
 fprintf('Glucose effectiveness (SG) = %g\n',SG)
 
@@ -207,6 +209,7 @@ SStot = sum((Gdata-mean(Gdata)).^2);
 R2 = 1 - SSres/SStot;
 
 fprintf('\nGoodness-of-Fit Metrics\n')
+fprintf('--------------------\n')
 fprintf('RMSE = %.3f\n',RMSE)
 fprintf('R^2 = %.4f\n',R2)
 
@@ -237,6 +240,7 @@ AIC = n*log(SSres/n) + 2*k;
 BIC = n*log(SSres/n) + k*log(n);
 
 fprintf('\nInformation Criteria\n')
+fprintf('--------------------\n')
 fprintf('AIC = %.3f\n',AIC)
 fprintf('BIC = %.3f\n',BIC)
 
@@ -246,8 +250,11 @@ fprintf('BIC = %.3f\n',BIC)
 residuals = Gdata - Gfit;
 
 
-[h,p,W] = swtest(residuals)
+[h,p,W] = swtest(residuals);
 
+fprintf('\nResidual Normality Test\n')
+fprintf('--------------------\n')
+fprintf('Shapiro-Wilk: W = %.4f, p = %.4g\n',W,p)
 
 figure
 plot(timeData,residuals,'o-')
