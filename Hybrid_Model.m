@@ -182,7 +182,8 @@ lb = [1e-4 1e-4 1e-8 1e-4 1e-6];
 ub = [1 1 1e-3 10 1];
 
 % Estimate parameters using nonlinear least squares
-p_est = lsqnonlin( ...
+[p_est,resnorm,residual,exitflag,output,lambda,J] = ...
+    lsqnonlin( ...
     @(p) objective_hybrid(p,timeData,Gdata,Gb,Ib), ...
     p0,lb,ub);
 
@@ -204,16 +205,21 @@ else
 end
 
 
-%% Estimated Parameters
+%% Parameter Uncertainty
+n = length(Gdata);
+k = length(p_est);
 
-fprintf('\nEstimated Parameters\n')
-fprintf('--------------------\n')
+sigma2 = resnorm/(n-k);
+Cov = sigma2 * pinv(full(J'*J));
+SE = sqrt(diag(Cov));
 
-fprintf('p1     = %.6g\n',p_est(1))
-fprintf('p2     = %.6g\n',p_est(2))
-fprintf('p3     = %.6g\n',p_est(3))
-fprintf('gamma  = %.6g\n',p_est(4))
-fprintf('delta  = %.6g\n',p_est(5))
+fprintf('\nParameter Estimates (± SE)\n')
+fprintf('--------------------------\n')
+fprintf('p1    = %.6g ± %.6g\n',p_est(1),SE(1))
+fprintf('p2    = %.6g ± %.6g\n',p_est(2),SE(2))
+fprintf('p3    = %.6g ± %.6g\n',p_est(3),SE(3))
+fprintf('gamma = %.6g ± %.6g\n',p_est(4),SE(4))
+fprintf('delta = %.6g ± %.6g\n',p_est(5),SE(5))
 
 %% Residual Norm Comparison
 
