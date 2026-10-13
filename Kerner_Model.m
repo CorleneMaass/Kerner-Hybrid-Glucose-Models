@@ -11,7 +11,7 @@
 %--------------------------------------------------
 
 
-%% FSIGT DATA (Kerner et al.)
+%% FSIGT DATA (Kerner)
 
 % Sampling times (min)
 timeData = [0 2 4 6 8 10 12 14 16 19 22 27 32 42 52 ...
